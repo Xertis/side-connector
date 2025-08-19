@@ -1,0 +1,7 @@
+{
+    "id": "side_connector",
+    "title": "SideConnector",
+    "version": "1.0.0",
+    "description": "Позволяет запускать моды, написанные только под нейтрон в одиночной игре",
+    "creator": "Xertis"
+}
