@@ -1,7 +1,6 @@
-local sandbox = start_require("server:lib/private/sandbox/sandbox")
-local account_manager = start_require("server:lib/private/accounts/account_manager")
-local protocol = start_require("server:multiplayer/protocol-kernel/protocol")
-local inv_dat = require "server:api/v1/inv_dat"
+local sandbox = require "managers/sandbox"
+local account_manager = require "managers/account_manager"
+local protocol = require "protocol/protocol"
 
 local module = {
     players = {},
@@ -27,12 +26,12 @@ function module.players.sync_states(_player, states)
     end
 
     if states.rot then
-        player.set_rot(_player.pid, states.rot.yaw, states.rot.pitch)
+        player.set_rot(_player.pid, states.rot.yaw, states.rot.pitch, 0)
     end
 
     if states.cheats then
-        player.set_noclip(states.cheats.noclip)
-        player.set_flight(states.cheats.flight)
+        player.set_noclip(_player.pid, states.cheats.noclip)
+        player.set_flight(_player.pid, states.cheats.flight)
     end
 
     client:push_packet(protocol.ServerMsg.SynchronizePlayerPosition, states)

@@ -1,5 +1,5 @@
-local server_echo = start_require("multiplayer/server/server_echo")
-local protocol = require "multiplayer/protocol-kernel/protocol"
+local server_echo = require "common/server_echo"
+local protocol = require "protocol/protocol"
 
 local envs = {}
 local module = {

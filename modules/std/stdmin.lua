@@ -1,5 +1,4 @@
 local data_buffer = require "files/bit_buffer"
-
 _G['$Multiplayer'] = {
     side = "standalone",
     pack_id = "side_connector",

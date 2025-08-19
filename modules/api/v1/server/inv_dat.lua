@@ -1,5 +1,5 @@
-local bson = require "lib/private/files/bson"
-local bb = require "lib/public/bit_buffer"
+local bson = require "files/bson"
+local bb = require "files/bit_buffer"
 local module = {}
 
 function module.serialize(inv)

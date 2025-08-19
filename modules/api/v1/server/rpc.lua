@@ -1,6 +1,6 @@
-local events = start_require("server:api/v1/events")
-local bson = require "lib/private/files/bson"
-local db = require "lib/public/bit_buffer"
+local events = require "api/v1/server/events"
+local bson = require "files/bson"
+local db = require "files/bit_buffer"
 
 local module = {
     emitter = {},

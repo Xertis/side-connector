@@ -1,9 +1,12 @@
-require "std/stdmin"
-
-local server = require "classes/server"
-local client = require "classes/client"
+local server_echo = require "common/server_echo"
 
 function on_world_open()
-    SERVER = server
-    CLIENT = client
+end
+
+function on_world_save()
+    events.emit("server:save")
+end
+
+function on_world_tick()
+    server_echo.proccess({CLIENT})
 end

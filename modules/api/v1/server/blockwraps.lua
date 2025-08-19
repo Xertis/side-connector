@@ -1,4 +1,4 @@
-local wraps = start_require "lib/private/gfx/blockwraps_manager"
+local wraps = require "managers/gfx/blockwraps_manager"
 local module = {}
 
 local defaultFunctions = {

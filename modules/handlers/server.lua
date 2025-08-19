@@ -1,9 +1,9 @@
-local protocol = require "multiplayer/protocol-kernel/protocol"
-local sandbox = require "lib/private/sandbox/sandbox"
-local chat = require "multiplayer/server/chat/chat"
-local api_events = require "api/v1/events"
-local api_env = require "api/v1/env"
-local entities_manager = require "lib/private/entities/entities_manager"
+local protocol = require "protocol/protocol"
+local sandbox = require "managers/sandbox"
+local chat = {}
+local api_events = require "api/v1/server/events"
+local api_env = require "api/v1/server/env"
+local entities_manager = require "managers/entities_manager"
 
 local handlers = {}
 

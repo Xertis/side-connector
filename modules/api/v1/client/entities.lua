@@ -25,6 +25,7 @@ entities.spawn = function(name, ...)
     local entity = original_spawn(name, ...)
     entity:despawn()
 
+    print(json.tostring(SERVER))
     SERVER:push_packet(protocol.ClientMsg.EntitySpawnTry, entity:def_index(), {...})
 
     return entity

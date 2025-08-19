@@ -1,4 +1,4 @@
-local utils = require "lib/utils"
+local utils = require "common/utils"
 
 local PARTICLES_PID = {}
 local module = {}
