@@ -113,6 +113,7 @@ local function __create_data(entity, is_player)
         or (conf ~= player_fields and conf.custom_fields) then
             local val = field.provider(uid, field_name)
             local val_type = type(val)
+
             if not table.has({"number", "string", "boolean", "table"}, val_type) then
                 error("Non-serializable data type got: " .. val_type)
             end
@@ -166,7 +167,6 @@ local function __update_data(data, dirty, cur_data)
 end
 
 local function __send_dirty(entity, uid, id, dirty, client, is_player)
-
     if table.count_pairs(dirty.standart_fields or {}) == 0 then
         dirty.standart_fields = nil
     end
@@ -214,7 +214,8 @@ function module.process(client)
         local tsf = entity.transform
 
         local id = entity:def_index()
-        local is_player = PLAYER_ENTITY_ID == id
+        local str_name = entity:def_name()
+        local is_player = str_name == "base:player"
 
         if is_player then
             local entity_pid = entity:get_player()
@@ -223,7 +224,6 @@ function module.process(client)
             end
         end
 
-        local str_name = entity:def_name()
         local _data = reg_entities[str_name] or {}
         if not _data.config and not is_player then
             logger.log("Spawn of an unregistered entity: " .. str_name)
@@ -257,5 +257,15 @@ function module.process(client)
         ::continue::
     end
 end
+
+local count = 0
+events.on("server:world_tick", function ()
+    count = count + 1
+    if count < 2^45 then
+        module.process(CLIENT)
+    else
+        print(json.tostring(entities_data))
+    end
+end)
 
 return module

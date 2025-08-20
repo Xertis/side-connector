@@ -1,6 +1,4 @@
 require "globals"
-require "std/stdboot"
-require "std/stdmin"
 require "init"
 
 local api_manager = require "api_manager"
@@ -41,5 +39,4 @@ local client_api = {
     inv_dat = api_manager.load("server", "inv_dat", "v1")
 }
 
-print(debug.getinfo(2).source)
 return {server = server_api, client = client_api}

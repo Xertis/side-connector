@@ -1,6 +1,6 @@
 local protocol = require "protocol/protocol"
 local List = require "common/list"
-local server_handlers = require "handlers/server"
+local client_handlers = require "handlers/client"
 
 local Client = {}
 local max_id = 0
@@ -29,9 +29,15 @@ function Client.new(active, network, address, port, username)
     return self
 end
 
+function Client:queue_response(packets)
+    for _, packet in ipairs(packets) do
+        client_handlers[packet.packet_type](packet, self)
+    end
+end
+
 function Client:push_packet(...)
     local packet = protocol.build_packet("server", ...)
-    server_handlers[packet.packet_type](packet, self)
+    client_handlers[packet.packet_type](packet, self)
 end
 
 return Client

@@ -1,3 +1,6 @@
+local sandbox = require "managers/sandbox"
+local accounts = require "managers/account_manager"
+
 --Проверка на наличие файла конфига
 do
     if not file.exists(CONFIG_PATH) then
@@ -27,3 +30,10 @@ do
     CODES = json.parse(file.read(CODES.codes_path))
     CODES = table.freeze(CODES)
 end
+
+-- Инициализируем одиночного(( игрока
+local account = accounts.login("root")
+local player = sandbox.join_player(account)
+
+CLIENT.account = account
+CLIENT.player = player

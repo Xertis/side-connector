@@ -15,6 +15,7 @@ for key, packet in ipairs(protocol.data.server) do
         local name = parts[1]
         table.insert(names, name)
     end
+
     protocol_names.server[key] = names
 end
 
@@ -27,19 +28,32 @@ for key, packet in ipairs(protocol.data.client) do
         local name = parts[1]
         table.insert(names, name)
     end
+
     protocol_names.client[key] = names
+end
+
+function protocol.create_databuffer()
+    local buffer = {bytes = {__is_buffer = true}}
+
+    function buffer.put_packet(_, packet)
+        table.insert(buffer.bytes, packet)
+    end
+
+    return buffer
 end
 
 function protocol.build_packet(client_or_server, packet_type, ...)
     local values = {...}
+    local packet = {}
+
     for indx, value in ipairs(values) do
-        local name = protocol_names[client_or_server][indx]
-        values[name] = value
+        local name = protocol_names[client_or_server][packet_type][indx]
+        packet[name] = value
     end
 
-    values["packet_type"] = packet_type
+    packet["packet_type"] = packet_type
 
-    return values
+    return packet
 end
 
 function protocol.parse_packet(client_or_server, data)

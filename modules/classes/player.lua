@@ -54,9 +54,9 @@ end
 
 function Player:to_load()
     self.username = "root"
-    self.entity_id = hud.get_player()
+    self.entity_id = 0
     self.world = ""
-    self.pid = hud.get_player()
+    self.pid = 0
     self.invid = player.get_inventory(self.pid)
     self.region_pos = {x = 0, y = 0}
 end

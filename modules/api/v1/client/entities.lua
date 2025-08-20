@@ -15,17 +15,22 @@ end
 local original_spawn = entities.spawn
 
 entities.spawn = function(name, ...)
-    local source_path = debug.getinfo(2, "S").source
-    local prefix = parse_path(source_path) or ""
+    local source_path = debug.getinfo(2, "S").source or "core:bytearray"
+    local prev_source_path = debug.getinfo(3, "S").source or "core:bytearray"
 
-    if desynced_entities[name] or prefix:find(PACK_ID) then
+    if prev_source_path == "=[C]" then
+        prev_source_path = "core:bytearray"
+    end
+
+    local prefix = parse_path(source_path)
+    local prev_prefix = parse_path(prev_source_path)
+    if desynced_entities[name] or prefix:find("side_connector") or prev_prefix:find("side_connector") then
         return original_spawn(name, ...)
     end
 
     local entity = original_spawn(name, ...)
     entity:despawn()
 
-    print(json.tostring(SERVER))
     SERVER:push_packet(protocol.ClientMsg.EntitySpawnTry, entity:def_index(), {...})
 
     return entity
